@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>数字人直播案例 · 扫码观看</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+  :root {
+    --paper: #F6F1E9;
+    --ink: #241C15;
+    --muted: #8A7F70;
+    --line: #E6DCCE;
+    --card: #FFFFFF;
+    --joocyee: #E2608A;
+    --guerlain: #AC8838;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 0 16px 48px; }
+
+  /* ===== 页头 ===== */
+  header { padding: 44px 4px 28px; text-align: left; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--muted);
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: rgba(255,255,255,0.6);
+  }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--joocyee); }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-weight: 900; font-size: 30px; line-height: 1.3;
+    margin-top: 16px; letter-spacing: 0.01em;
+  }
+  .sub { margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+  /* ===== 案例卡片 ===== */
+  .case {
+    margin-top: 28px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(36,28,21,0.06);
+  }
+  .stage { position: relative; background: #14100C; }
+  video { display: block; width: 100%; aspect-ratio: 461 / 1000; object-fit: contain; background: #14100C; }
+  video.is-guerlain { aspect-ratio: 453 / 1000; }
+  .play {
+    position: absolute; inset: 0; margin: auto;
+    width: 72px; height: 72px; border-radius: 50%;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; background: var(--joocyee);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    transition: transform 0.18s ease, opacity 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .play svg { width: 28px; height: 28px; margin-left: 3px; }
+  .play:active { transform: scale(0.92); }
+  .play.hidden { opacity: 0; pointer-events: none; }
+  .case.is-guerlain .play { background: var(--guerlain); }
+
+  .info { padding: 16px 18px 18px; }
+  .info-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .case.is-joocyee .dot { background: var(--joocyee); }
+  .case.is-guerlain .dot { background: var(--guerlain); }
+  h2 { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; font-weight: 600; font-size: 20px; }
+  .duration {
+    font-size: 12px; font-variant-numeric: tabular-nums;
+    color: var(--muted); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 10px; flex: none;
+  }
+  .desc { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 12px; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 10px;
+  }
+
+  /* ===== 页脚 ===== */
+  footer { margin-top: 36px; text-align: center; color: var(--muted); font-size: 12px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">AI 数字人直播案例</span>
+    <h1>直播案例精选</h1>
+    <p class="sub">两个美妆品牌直播间实录，点击播放即可观看。</p>
+  </header>
+
+  <section class="case is-joocyee">
+    <div class="stage">
+      <video class="is-joocyee" controls playsinline preload="metadata" poster="joocyee_poster.jpg"
+             src="joocyee.mp4"></video>
+      <button class="play" type="button" aria-label="播放酵色案例视频">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
+      </button>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="brand"><span class="dot"></span><h2>JOOCYEE 酵色</h2></div>
+        <span class="duration">00:37</span>
+      </div>
+      <p class="desc">美妆直播带货实录 · 冰美式妆前喷雾、固体唇蜜等爆品讲解。</p>
+      <div class="tags"><span class="tag">美妆直播</span><span class="tag">带货讲解</span></div>
+    </div>
+  </section>
+
+  <section class="case is-guerlain">
+    <div class="stage">
+      <video class="is-guerlain" controls playsinline preload="metadata" poster="guerlain_poster.jpg"
+             src="guerlain.mp4"></video>
+      <button class="play" type="button" aria-label="播放娇兰案例视频">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
+      </button>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="brand"><span class="dot"></span><h2>GUERLAIN 娇兰</h2></div>
+        <span class="duration">00:51</span>
+      </div>
+      <p class="desc">护肤直播带货实录 · 第四代黄金复原蜜精华讲解与试用。</p>
+      <div class="tags"><span class="tag">护肤直播</span><span class="tag">精华讲解</span></div>
+    </div>
+  </section>
+
+  <footer>AI 数字人直播案例展示 · 建议使用手机全屏观看</footer>
+</div>
+
+<script>
+  (function () {
+    var stages = document.querySelectorAll('.stage');
+    Array.prototype.forEach.call(stages, function (stage) {
+      var video = stage.querySelector('video');
+      var play = stage.querySelector('.play');
+      play.addEventListener('click', function () {
+        var p = video.play();
+        if (p && p.catch) { p.catch(function () {}); }
+      });
+      video.addEventListener('play', function () { play.classList.add('hidden'); });
+      video.addEventListener('pause', function () { play.classList.remove('hidden'); });
+      video.addEventListener('ended', function () { play.classList.remove('hidden'); });
+    });
+  })();
+</script>
+</body>
+</html>
