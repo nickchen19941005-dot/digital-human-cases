@@ -90,6 +90,34 @@
     border-radius: 999px; padding: 4px 10px;
   }
 
+
+  /* ===== 联系我 ===== */
+  .contact {
+    margin-top: 36px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(36,28,21,0.06);
+    text-align: center;
+    padding: 26px 20px 28px;
+  }
+  .contact h3 { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; font-weight: 600; font-size: 19px; }
+  .contact .c-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .contact img {
+    display: block; width: 190px; height: auto; margin: 18px auto 0;
+    border-radius: 14px; border: 1px solid var(--line);
+    background: #fff;
+  }
+  .contact .c-hint {
+    margin-top: 16px; display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 999px; padding: 8px 16px;
+  }
+  .contact .c-hint::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .contact .c-tip { margin-top: 10px; font-size: 12px; color: var(--muted); }
+
   /* ===== 页脚 ===== */
   footer { margin-top: 36px; text-align: center; color: var(--muted); font-size: 12px; }
 
@@ -141,6 +169,15 @@
       <p class="desc">直播间商品选购操作实录 · 讲解与商品列表无缝切换。</p>
       <div class="tags"><span class="tag">宠物直播</span><span class="tag">商品讲解</span></div>
     </div>
+  </section>
+
+
+  <section class="contact">
+    <h3>添加微信，获取更多行业案例</h3>
+    <p class="c-sub">看完案例后，长按识别下方二维码添加好友</p>
+    <img src="wechat_contact.png" alt="微信二维码" loading="lazy">
+    <span class="c-hint">长按识别二维码 · 添加我为好友</span>
+    <p class="c-tip">建议在微信内打开本页后长按识别</p>
   </section>
 
   <footer>AI 宠物直播案例展示 · 建议使用手机全屏观看</footer>
