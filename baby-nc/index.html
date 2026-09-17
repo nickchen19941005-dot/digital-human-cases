@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>宠物直播案例 · 扫码观看</title>
+<title>母婴直播案例 · 扫码观看</title>
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap">
 <style>
   :root {
@@ -12,8 +12,8 @@
     --muted: #8A7F70;
     --line: #E6DCCE;
     --card: #FFFFFF;
-    --accent: #E2763C;
-    --accent2: #8A6A45;
+    --accent: #2FA39C;
+    --accent2: #1E6F6A;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
@@ -53,8 +53,9 @@
     box-shadow: 0 10px 30px rgba(36,28,21,0.06);
   }
   .stage { position: relative; background: #14100C; }
-  video { display: block; width: 100%; aspect-ratio: 0.562; object-fit: contain; background: #14100C; }
-  video.is-second { aspect-ratio: 0.461; }
+  video { display: block; width: 100%; aspect-ratio: 0.453; object-fit: contain; background: #14100C; }
+  video.is-second { aspect-ratio: 0.453; }
+  video.is-third { aspect-ratio: 0.460; }
   .play {
     position: absolute; inset: 0; margin: auto;
     width: 72px; height: 72px; border-radius: 50%;
@@ -69,6 +70,7 @@
   .play:active { transform: scale(0.92); }
   .play.hidden { opacity: 0; pointer-events: none; }
   .case.is-second .play { background: var(--accent2); }
+  .case.is-third .play { background: var(--accent2); }
 
   .info { padding: 16px 18px 18px; }
   .info-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -76,6 +78,7 @@
   .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
   .case.is-first .dot { background: var(--accent); }
   .case.is-second .dot { background: var(--accent2); }
+  .case.is-third .dot { background: var(--accent2); }
   h2 { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; font-weight: 600; font-size: 20px; }
   .duration {
     font-size: 12px; font-variant-numeric: tabular-nums;
@@ -102,48 +105,67 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow">AI 宠物直播案例</span>
+    <span class="eyebrow">AI 母婴直播案例</span>
     <h1>直播案例精选</h1>
-    <p class="sub">ACANA 爱肯拿宠物食品直播间实录，点击播放即可观看。</p>
+    <p class="sub">母婴品牌直播间实录，点击播放即可观看。</p>
   </header>
 
   <section class="case is-first">
     <div class="stage">
-      <video class="is-first" controls playsinline preload="metadata" poster="pet1_poster.jpg"
-             src="pet1.mp4"></video>
+      <video class="is-first" controls playsinline preload="metadata" poster="https://nickchen19941005-dot.github.io/digital-human-cases/baby/babycare_poster.jpg"
+             src="https://nickchen19941005-dot.github.io/digital-human-cases/baby/babycare.mp4"></video>
       <button class="play" type="button" aria-label="播放案例视频">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
       </button>
     </div>
     <div class="info">
       <div class="info-top">
-        <div class="brand"><span class="dot"></span><h2>ACANA 爱肯拿</h2></div>
-        <span class="duration">00:18</span>
+        <div class="brand"><span class="dot"></span><h2>Babycare</h2></div>
+        <span class="duration">00:28</span>
       </div>
-      <p class="desc">直播间弹幕智能回复实录 · 精准识别咨询、秒级回复。</p>
-      <div class="tags"><span class="tag">宠物直播</span><span class="tag">弹幕互动</span></div>
+      <p class="desc">母婴直播实录 · 大件国补专区婴童用品讲解。</p>
+      <div class="tags"><span class="tag">母婴直播</span><span class="tag">国补好物</span></div>
     </div>
   </section>
 
   <section class="case is-second">
     <div class="stage">
-      <video class="is-second" controls playsinline preload="metadata" poster="pet2_poster.jpg"
-             src="pet2.mp4"></video>
+      <video class="is-second" controls playsinline preload="metadata" poster="https://nickchen19941005-dot.github.io/digital-human-cases/baby/babycare2_poster.jpg"
+             src="https://nickchen19941005-dot.github.io/digital-human-cases/baby/babycare2.mp4"></video>
       <button class="play" type="button" aria-label="播放案例视频">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
       </button>
     </div>
     <div class="info">
       <div class="info-top">
-        <div class="brand"><span class="dot"></span><h2>ACANA 爱肯拿</h2></div>
-        <span class="duration">00:44</span>
+        <div class="brand"><span class="dot"></span><h2>Babycare</h2></div>
+        <span class="duration">00:31</span>
       </div>
-      <p class="desc">直播间商品选购操作实录 · 讲解与商品列表无缝切换。</p>
-      <div class="tags"><span class="tag">宠物直播</span><span class="tag">商品讲解</span></div>
+      <p class="desc">母婴直播实录 · 儿童保温杯细节展示讲解。</p>
+      <div class="tags"><span class="tag">母婴直播</span><span class="tag">产品特写</span></div>
     </div>
   </section>
 
-  <footer>AI 宠物直播案例展示 · 建议使用手机全屏观看</footer>
+  <section class="case is-third">
+    <div class="stage">
+      <video class="is-third" controls playsinline preload="metadata" poster="https://nickchen19941005-dot.github.io/digital-human-cases/baby/bebebus_poster.jpg"
+             src="https://nickchen19941005-dot.github.io/digital-human-cases/baby/bebebus.mp4"></video>
+      <button class="play" type="button" aria-label="播放案例视频">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
+      </button>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="brand"><span class="dot"></span><h2>BeBeBus</h2></div>
+        <span class="duration">00:29</span>
+      </div>
+      <p class="desc">母婴直播实录 · 乳木果润尿裤夏季透气讲解。</p>
+      <div class="tags"><span class="tag">母婴直播</span><span class="tag">AI推荐官</span></div>
+    </div>
+  </section>
+
+
+  <footer>AI 母婴直播案例展示 · 建议使用手机全屏观看</footer>
 </div>
 
 <script>
