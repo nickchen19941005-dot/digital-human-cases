@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>数字人直播案例 · 六大行业精选</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+  :root {
+    --paper: #F6F1E9;
+    --ink: #241C15;
+    --muted: #8A7F70;
+    --line: #E6DCCE;
+    --card: #FFFFFF;
+    --accent: #241C15;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 28px 20px 48px;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 24px; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(255,255,255,0.8);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 16px;
+  }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", serif;
+    font-size: 28px; font-weight: 900;
+    margin-top: 14px; letter-spacing: 0.02em;
+  }
+  .sub { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .divider { display: flex; align-items: center; gap: 10px; margin: 22px 0 16px; color: var(--muted); font-size: 13px; font-weight: 500; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* ===== 行业板块 ===== */
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .industry-card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 16px 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform .12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .industry-card:active { transform: scale(.97); }
+  .industry-card .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .industry-card .name { font-size: 17px; font-weight: 700; margin-top: 8px; }
+  .industry-card .brands { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .industry-card .go { margin-top: 10px; font-size: 12px; color: #fff; background: var(--ink); border-radius: 999px; padding: 5px 12px; display: inline-block; }
+
+  /* ===== 表单板块 ===== */
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 18px;
+    margin-top: 8px;
+  }
+  .form-title { font-family: "Noto Serif SC", "Songti SC", serif; font-size: 19px; font-weight: 900; }
+  .form-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .field { margin-top: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .field label .req { color: #C0392B; }
+  .field input, .field select {
+    width: 100%;
+    font-size: 15px;
+    font-family: inherit;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #FDFBF7;
+    color: var(--ink);
+    -webkit-appearance: none; appearance: none;
+    outline: none;
+  }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .btn {
+    display: block; width: 100%;
+    margin-top: 20px;
+    padding: 14px 0;
+    border: none; border-radius: 999px;
+    background: var(--ink); color: #fff;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+    font-family: inherit;
+  }
+  .btn:active { transform: scale(.98); }
+  .err-msg { color: #C0392B; font-size: 12px; margin-top: 8px; display: none; }
+
+  /* ===== 提交后微信码 ===== */
+  .wechat-result {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px 18px;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .wechat-result h2 { font-family: "Noto Serif SC", "Songti SC", serif; font-size: 20px; font-weight: 900; }
+  .wechat-result .tip { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .wechat-result img.qr {
+    width: 190px; height: auto;
+    margin: 18px auto 0;
+    display: block;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+  .wechat-result .hold {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 13px; font-weight: 700; color: #fff;
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 9px 18px;
+  }
+  .wechat-result .again { display: block; margin-top: 14px; font-size: 13px; color: var(--muted); text-decoration: underline; }
+  footer { text-align: center; margin-top: 26px; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">AI 数字人直播案例</span>
+    <h1>六大行业案例精选</h1>
+    <p class="sub">点击行业卡片查看对应案例 Demo，扫码添加微信获取免费试播。</p>
+  </header>
+
+  <!-- ===== 一、行业案例板块 ===== -->
+  <div class="divider">行业案例 · 点击进入</div>
+  <div class="industry-grid">
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/beauty/">
+      <span class="dot" style="background:#E2608A"></span>
+      <div class="name">美妆</div>
+      <div class="brands">JOOCYEE 酵色 · 资生堂 · 海蓝之谜</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/pet/">
+      <span class="dot" style="background:#E2763C"></span>
+      <div class="name">宠物</div>
+      <div class="brands">ACANA 爱肯拿</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/baby/">
+      <span class="dot" style="background:#2FA39C"></span>
+      <div class="name">母婴</div>
+      <div class="brands">Babycare · BeBeBus</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/home/">
+      <span class="dot" style="background:#3E8FA0"></span>
+      <div class="name">日化</div>
+      <div class="brands">超能 · 日化洗护</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/fashion/">
+      <span class="dot" style="background:#9A5BB8"></span>
+      <div class="name">鞋服</div>
+      <div class="brands">JIMMY CHOO · 天猫奢品 · 之禾 · 足下</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+    <a class="industry-card" href="https://nickchen19941005-dot.github.io/digital-human-cases/fmcg/">
+      <span class="dot" style="background:#E0783C"></span>
+      <div class="name">快消品</div>
+      <div class="brands">认养一头牛 · 伊利</div>
+      <span class="go">查看 Demo →</span>
+    </a>
+  </div>
+
+  <!-- ===== 二、信息收集板块 ===== -->
+  <div class="divider">免费试播 · 信息登记</div>
+  <div class="form-card">
+    <div class="form-title">提交信息，领取免费试播</div>
+    <p class="form-desc">填写以下信息，提交后添加微信获取专属试播方案</p>
+    <form id="leadForm" novalidate>
+      <div class="field">
+        <label>品牌名 <span class="req">*</span></label>
+        <input type="text" id="brand" placeholder="如：某品牌" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label>公司主体 <span class="req">*</span></label>
+        <input type="text" id="company" placeholder="营业执照上的公司全称" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label>平台 <span class="req">*</span></label>
+        <select id="platform">
+          <option value="" disabled selected>请选择直播平台</option>
+          <option>抖音</option>
+          <option>快手</option>
+          <option>视频号</option>
+          <option>淘宝 / 天猫</option>
+          <option>京东</option>
+          <option>小红书</option>
+          <option>拼多多</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>联系人 <span class="req">*</span></label>
+        <input type="text" id="contact" placeholder="您的称呼" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>联系电话 <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="11 位手机号" maxlength="11" inputmode="numeric" autocomplete="tel">
+      </div>
+      <button type="submit" class="btn">提交信息，领取免费试播</button>
+      <p class="err-msg" id="errMsg"></p>
+    </form>
+  </div>
+
+  <!-- 提交成功：展示微信二维码 -->
+  <div class="wechat-result" id="wechatResult">
+    <h2>已收到您的信息</h2>
+    <p class="tip">长按识别下方二维码，添加微信<br>获取您的专属免费试播方案</p>
+    <img class="qr" src="wechat_contact.png" alt="微信二维码">
+    <span class="hold">长按识别二维码，添加我的微信</span>
+    <a class="again" href="javascript:void(0)" onclick="resetForm()">返回重新填写</a>
+  </div>
+
+  <footer>一知智能 · 数字人直播解决方案</footer>
+</div>
+
+<script>
+  var form = document.getElementById('leadForm');
+  var errMsg = document.getElementById('errMsg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var brand = document.getElementById('brand').value.trim();
+    var company = document.getElementById('company').value.trim();
+    var platform = document.getElementById('platform').value;
+    var contact = document.getElementById('contact').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var msg = '';
+    if (!brand) msg = '请填写品牌名';
+    else if (!company) msg = '请填写公司主体';
+    else if (!platform) msg = '请选择直播平台';
+    else if (!contact) msg = '请填写联系人';
+    else if (!/^1\d{10}$/.test(phone)) msg = '请填写正确的 11 位手机号';
+    if (msg) {
+      errMsg.textContent = msg;
+      errMsg.style.display = 'block';
+      return;
+    }
+    errMsg.style.display = 'none';
+    // 本地留存一份线索（浏览器存储），便于追溯
+    try {
+      var leads = JSON.parse(localStorage.getItem('demo_leads') || '[]');
+      leads.push({ brand: brand, company: company, platform: platform, contact: contact, phone: phone, time: new Date().toISOString() });
+      localStorage.setItem('demo_leads', JSON.stringify(leads));
+    } catch (err) {}
+    // 展示微信二维码
+    document.querySelector('.form-card').style.display = 'none';
+    document.getElementById('wechatResult').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('wechatResult').offsetTop - 16, behavior: 'smooth' });
+  });
+  function resetForm() {
+    document.getElementById('wechatResult').style.display = 'none';
+    document.querySelector('.form-card').style.display = 'block';
+    form.reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
