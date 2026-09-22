@@ -338,13 +338,13 @@
   // 2) 行为拦截
   document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   document.addEventListener('selectstart', function (e) {
-    if (!e.target.closest('input,textarea,select,.field,form')) e.preventDefault();
+    if (!e.target.closest('input,textarea,select,.field,form,.modal,.trial-bar')) e.preventDefault();
   });
   document.addEventListener('dragstart', function (e) {
     if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
   });
   document.addEventListener('copy', function (e) {
-    if (!e.target.closest('input,textarea,select')) e.preventDefault();
+    if (!e.target.closest('input,textarea,select,.modal,.trial-bar')) e.preventDefault();
   });
   document.addEventListener('keydown', function (e) {
     var k = (e.key || '').toUpperCase();
