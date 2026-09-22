@@ -234,6 +234,40 @@
 </div>
 
 <script>
+  // ===== 飞书行为轨迹上报 =====
+  var WEBHOOK = atob('aHR0cHM6Ly9vcGVuLmZlaXNodS5jbi9vcGVuLWFwaXMvYm90L3YyL2hvb2svNDRjYTY2MGMtYTBkMC00MTJkLWExOGYtMDMwNmQ1YjUyMDAy');
+  var _lastReport = {};
+  function _pad(n) { return (n < 10 ? '0' : '') + n; }
+  function _nowStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + _pad(d.getMonth() + 1) + '-' + _pad(d.getDate()) + ' ' +
+           _pad(d.getHours()) + ':' + _pad(d.getMinutes()) + ':' + _pad(d.getSeconds());
+  }
+  function reportToFeishu(msg) {
+    try {
+      var key = msg.slice(0, 24);
+      var now = Date.now();
+      if (_lastReport[key] && now - _lastReport[key] < 5000) return; // 5 秒去重
+      _lastReport[key] = now;
+      var payload = JSON.stringify({ msg_type: 'text', content: { text: msg } });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(WEBHOOK, new Blob([payload], { type: 'application/json' }));
+      } else {
+        fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
+      }
+    } catch (e) {}
+  }
+  // 行业卡片点击 → 上报行为轨迹
+  document.querySelectorAll('.industry-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      var name = card.querySelector('.name').textContent.trim();
+      reportToFeishu('【数字人案例页·行为轨迹】\n🕒 ' + _nowStr() +
+        '\n📂 事件：打开行业 Demo' +
+        '\n🏷 行业：' + name +
+        '\n🔗 ' + card.href);
+    });
+  });
+
   var form = document.getElementById('leadForm');
   var errMsg = document.getElementById('errMsg');
   form.addEventListener('submit', function (e) {
@@ -255,6 +289,13 @@
       return;
     }
     errMsg.style.display = 'none';
+    // 上报线索到飞书
+    reportToFeishu('【数字人案例页·新线索】\n🕒 ' + _nowStr() +
+      '\n🏢 品牌名：' + brand +
+      '\n🏭 公司主体：' + company +
+      '\n📱 平台：' + platform +
+      '\n👤 联系人：' + contact +
+      '\n📞 联系电话：' + phone);
     // 本地留存一份线索（浏览器存储），便于追溯
     try {
       var leads = JSON.parse(localStorage.getItem('demo_leads') || '[]');
