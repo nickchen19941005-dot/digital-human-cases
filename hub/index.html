@@ -250,11 +250,7 @@
       if (_lastReport[key] && now - _lastReport[key] < 5000) return; // 5 秒去重
       _lastReport[key] = now;
       var payload = JSON.stringify({ msg_type: 'text', content: { text: msg } });
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(WEBHOOK, new Blob([payload], { type: 'application/json' }));
-      } else {
-        fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
-      }
+      fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
     } catch (e) {}
   }
   // 行业卡片点击 → 上报行为轨迹
