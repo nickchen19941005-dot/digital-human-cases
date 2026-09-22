@@ -140,8 +140,7 @@
 
   <section class="case is-first">
     <div class="stage">
-      <video class="is-first" controls playsinline preload="metadata" poster="home1_poster.jpg"
-             src="home1.mp4"></video>
+      <video class="is-first" controls playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture draggable="false" data-vb="dl81ZTE4aG50aC5tcDQ=" data-pb="dl81ZTE4aG50aC5qcGc="></video>
       <button class="play" type="button" aria-label="播放案例视频">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
       </button>
@@ -158,8 +157,7 @@
 
   <section class="case is-second">
     <div class="stage">
-      <video class="is-second" controls playsinline preload="metadata" poster="home2_poster.jpg"
-             src="home2.mp4"></video>
+      <video class="is-second" controls playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture draggable="false" data-vb="dl9iOGI4dnptZC5tcDQ=" data-pb="dl9iOGI4dnptZC5qcGc="></video>
       <button class="play" type="button" aria-label="播放案例视频">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
       </button>
@@ -202,6 +200,38 @@
       video.addEventListener('ended', function () { play.classList.remove('hidden'); });
     });
   })();
+</script>
+
+<script>
+/* 反扒加固 */
+(function () {
+  // 1) 媒体直链混淆解码：源码中不出现视频直链，运行时由 base64 还原
+  function dec(o) {
+    var v = o.getAttribute('data-vb'), p = o.getAttribute('data-pb');
+    if (v) o.src = atob(v);
+    if (p) o.poster = atob(p);
+  }
+  function run() {
+    document.querySelectorAll('video[data-vb]').forEach(dec);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+  // 2) 行为拦截
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('selectstart', function (e) {
+    if (!e.target.closest('input,textarea,select,.field,form')) e.preventDefault();
+  });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
+  });
+  document.addEventListener('copy', function (e) {
+    if (!e.target.closest('input,textarea,select')) e.preventDefault();
+  });
+  document.addEventListener('keydown', function (e) {
+    var k = (e.key || '').toUpperCase();
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].indexOf(k) >= 0) ||
+        (e.ctrlKey && (k === 'U' || k === 'S'))) { e.preventDefault(); return false; }
+  });
+})();
 </script>
 </body>
 </html>

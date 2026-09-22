@@ -310,5 +310,37 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
+<script>
+/* 反扒加固 */
+(function () {
+  // 1) 媒体直链混淆解码：源码中不出现视频直链，运行时由 base64 还原
+  function dec(o) {
+    var v = o.getAttribute('data-vb'), p = o.getAttribute('data-pb');
+    if (v) o.src = atob(v);
+    if (p) o.poster = atob(p);
+  }
+  function run() {
+    document.querySelectorAll('video[data-vb]').forEach(dec);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+  // 2) 行为拦截
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('selectstart', function (e) {
+    if (!e.target.closest('input,textarea,select,.field,form')) e.preventDefault();
+  });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
+  });
+  document.addEventListener('copy', function (e) {
+    if (!e.target.closest('input,textarea,select')) e.preventDefault();
+  });
+  document.addEventListener('keydown', function (e) {
+    var k = (e.key || '').toUpperCase();
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].indexOf(k) >= 0) ||
+        (e.ctrlKey && (k === 'U' || k === 'S'))) { e.preventDefault(); return false; }
+  });
+})();
+</script>
 </body>
 </html>
