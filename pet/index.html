@@ -91,32 +91,75 @@
   }
 
 
-  /* ===== 联系我 ===== */
-  .contact {
-    margin-top: 36px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(36,28,21,0.06);
-    text-align: center;
-    padding: 26px 20px 28px;
+
+  /* ===== 行业卖点标签 ===== */
+  .highlights { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .highlights span {
+    font-size: 12px; color: #F0E9DB;
+    background: rgba(201,165,92,0.14);
+    border: 1px solid rgba(201,165,92,0.45);
+    border-radius: 999px; padding: 5px 11px;
   }
-  .contact h3 { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; font-weight: 600; font-size: 19px; }
-  .contact .c-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
-  .contact img {
-    display: block; width: 190px; height: auto; margin: 18px auto 0;
-    border-radius: 14px; border: 1px solid var(--line);
-    background: #fff;
+
+  /* ===== 悬浮微信按钮 ===== */
+  .float-btn {
+    position: fixed; right: 18px; bottom: 30px; z-index: 99;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #14241C;
+    border: none; border-radius: 999px;
+    padding: 12px 20px; font-size: 14px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    -webkit-tap-highlight-color: transparent;
   }
-  .contact .c-hint {
-    margin-top: 16px; display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; font-weight: 700; color: var(--accent);
-    background: var(--paper); border: 1px solid var(--line);
+  .float-btn svg { width: 18px; height: 18px; }
+  .float-btn:active { transform: scale(.96); }
+
+  /* ===== 微信弹窗 ===== */
+  .modal-mask {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(6,17,12,0.72);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal {
+    background: #173026; border: 1px solid #27463A;
+    border-radius: 22px; padding: 30px 22px 26px;
+    width: 100%; max-width: 340px; text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .modal-close {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; color: #9FB3A8;
+    font-size: 26px; line-height: 1; padding: 6px; cursor: pointer;
+  }
+  .modal h3 { color: #F0E9DB; font-size: 18px; font-weight: 700; }
+  .modal .modal-tip { color: #9FB3A8; font-size: 12px; margin-top: 6px; }
+  .modal img { width: 200px; height: auto; margin: 16px auto 0; display: block; border-radius: 12px; background: #fff; }
+  .modal .modal-hold {
+    display: inline-block; margin-top: 14px;
+    background: #C9A55C; color: #14241C;
+    font-size: 13px; font-weight: 700;
     border-radius: 999px; padding: 8px 16px;
   }
-  .contact .c-hint::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-  .contact .c-tip { margin-top: 10px; font-size: 12px; color: var(--muted); }
+  .modal .modal-note { color: #9FB3A8; font-size: 11px; margin-top: 12px; }
+
+  /* ===== 播放完成引导条 ===== */
+  .trial-bar {
+    position: fixed; left: 14px; right: 14px; bottom: 96px; z-index: 98;
+    background: #173026; border: 1px solid #C9A55C;
+    border-radius: 16px; padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .trial-txt { flex: 1; }
+  .trial-txt b { color: #F0E9DB; font-size: 13px; }
+  .trial-txt span { display: block; color: #9FB3A8; font-size: 11px; margin-top: 2px; }
+  .trial-go {
+    background: #C9A55C; color: #14241C; border: none;
+    border-radius: 999px; padding: 8px 14px; font-size: 12px; font-weight: 700;
+  }
+  .trial-x { background: none; border: none; color: #9FB3A8; font-size: 18px; padding: 4px; }
 
   /* ===== 页脚 ===== */
   footer { margin-top: 36px; text-align: center; color: var(--muted); font-size: 12px; }
@@ -133,6 +176,7 @@
     <span class="eyebrow">AI 宠物直播案例</span>
     <h1>直播案例精选</h1>
     <p class="sub">ACANA 爱肯拿宠物食品直播间实录，点击播放即可观看。</p>
+  <div class="highlights"><span>AI主播永不疲倦</span><span>全天候开播</span><span>品牌形象统一输出</span></div>
   </header>
 
   <section class="case is-first">
@@ -170,15 +214,32 @@
   </section>
 
 
-  <section class="contact">
-    <h3>添加微信，获取更多行业案例</h3>
-    <p class="c-sub">看完案例后，长按识别下方二维码添加好友</p>
-    <img src="wechat_contact.png" alt="微信二维码" loading="lazy">
-    <span class="c-hint">长按识别二维码 · 添加我为好友</span>
-    <p class="c-tip">建议在微信内打开本页后长按识别</p>
-  </section>
-
   <footer>AI 宠物直播案例展示 · 建议使用手机全屏观看</footer>
+
+  <!-- 悬浮微信咨询按钮 -->
+  <button class="float-btn" id="floatBtn" type="button">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6 2 11c0 2.8 1.5 5.3 3.9 6.9L5 22l4.2-2.2c.9.2 1.8.4 2.8.4 5.5 0 10-4 10-9S17.5 2 12 2zm-3.6 9.6c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2zm7.2 0c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2z"/></svg>
+    微信咨询
+  </button>
+
+  <!-- 微信二维码弹窗 -->
+  <div class="modal-mask" id="modalMask" style="display:none">
+    <div class="modal" id="modalBox">
+      <button class="modal-close" id="modalClose" type="button" aria-label="关闭">&times;</button>
+      <h3>添加微信 · 获取免费试播方案</h3>
+      <p class="modal-tip">长按识别下方二维码，添加我的微信</p>
+      <img src="wechat_contact.png" alt="微信二维码">
+      <span class="modal-hold">长按识别二维码 · 添加好友</span>
+      <p class="modal-note">备注品牌名，优先安排专属试播</p>
+    </div>
+  </div>
+
+  <!-- 播放完成引导条 -->
+  <div class="trial-bar" id="trialBar" style="display:none">
+    <div class="trial-txt"><b>案例已看完</b><span>免费试播名额领取中，填写信息优先安排</span></div>
+    <button class="trial-go" id="trialGo" type="button">填写信息 →</button>
+    <button class="trial-x" id="trialX" type="button" aria-label="关闭">&times;</button>
+  </div>
 </div>
 
 <script>
@@ -196,6 +257,69 @@
       video.addEventListener('ended', function () { play.classList.remove('hidden'); });
     });
   })();
+</script>
+
+
+<script>
+/* 悬浮弹窗 + 播放埋点 + 引导（宠物） */
+(function () {
+  var IND = '宠物';
+  var SLUG = 'pet';
+  var WH = atob('aHR0cHM6Ly9vcGVuLmZlaXNodS5jbi9vcGVuLWFwaXMvYm90L3YyL2hvb2svNDRjYTY2MGMtYTBkMC00MTJkLWExOGYtMDMwNmQ1YjUyMDAy');
+  function getSrc(){ try { return localStorage.getItem('hub_src') || ''; } catch(e){ return ''; } }
+  function _pad(n){ return (n<10?'0':'')+n; }
+  function nowStr(){ var d=new Date(); return d.getFullYear()+'-'+_pad(d.getMonth()+1)+'-'+_pad(d.getDate())+' '+_pad(d.getHours())+':'+_pad(d.getMinutes())+':'+_pad(d.getSeconds()); }
+  function rep(m){ try { fetch(WH, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ msg_type:'text', content:{ text:m } }), keepalive:true }); } catch(e){} }
+  function srcLabel(){ var s=getSrc(); return s ? s : '直接访问'; }
+
+  // 悬浮按钮 → 弹窗
+  var fb = document.getElementById('floatBtn');
+  var mask = document.getElementById('modalMask');
+  var mc = document.getElementById('modalClose');
+  function openModal(){ if (mask) mask.style.display = 'flex'; }
+  function closeModal(){ if (mask) mask.style.display = 'none'; }
+  if (fb) fb.addEventListener('click', openModal);
+  if (mc) mc.addEventListener('click', closeModal);
+  if (mask) mask.addEventListener('click', function(e){ if (e.target === mask) closeModal(); });
+  // 弹窗打开时上报一次（含来源）
+  if (fb) fb.addEventListener('click', function(){
+    rep('【数字人案例页·行为轨迹】\n事件：点击悬浮微信按钮\n行业：' + IND + '\n来源：' + srcLabel() + '\n时间：' + nowStr());
+  });
+
+  // 播放进度 25/50/75/100 上报
+  document.querySelectorAll('.stage').forEach(function (stage) {
+    var v = stage.querySelector('video');
+    if (!v) return;
+    var done = {};
+    v.addEventListener('timeupdate', function () {
+      if (!v.duration) return;
+      var pct = v.currentTime / v.duration;
+      [0.25, 0.5, 0.75, 1].forEach(function (t) {
+        if (pct >= t && !done[t]) {
+          done[t] = 1;
+          rep('【数字人案例页·行为轨迹】\n事件：视频播放' + Math.round(t*100) + '%\n行业：' + IND + '\n来源：' + srcLabel() + '\n时间：' + nowStr());
+        }
+      });
+    });
+    // 播完 → 显示引导条
+    v.addEventListener('ended', function () {
+      var tb = document.getElementById('trialBar');
+      if (tb) tb.style.display = 'flex';
+    });
+  });
+
+  // 引导条：去填写信息（带来源参数）
+  var tgo = document.getElementById('trialGo');
+  var tx = document.getElementById('trialX');
+  if (tgo) tgo.addEventListener('click', function () {
+    rep('【数字人案例页·行为轨迹】\n事件：点击免费试播引导\n行业：' + IND + '\n来源：' + srcLabel() + '\n时间：' + nowStr());
+    location.href = 'https://nickchen19941005-dot.github.io/digital-human-cases/hub/?src=' + encodeURIComponent(getSrc());
+  });
+  if (tx) tx.addEventListener('click', function () {
+    var tb = document.getElementById('trialBar');
+    if (tb) tb.style.display = 'none';
+  });
+})();
 </script>
 
 <script>

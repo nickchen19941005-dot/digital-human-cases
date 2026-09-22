@@ -129,6 +129,19 @@
   }
   .wechat-result .again { display: block; margin-top: 14px; font-size: 13px; color: var(--muted); text-decoration: underline; }
   footer { text-align: center; margin-top: 26px; font-size: 12px; color: var(--muted); }
+
+  .copy-tel {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px; color: var(--ink);
+    -webkit-user-select: text; user-select: text;
+  }
+  .copy-tel b { color: var(--accent); font-weight: 700; flex: none; }
+
 </style>
 </head>
 <body>
@@ -185,18 +198,18 @@
   <div class="divider">免费试播 · 信息登记</div>
   <div class="form-card">
     <div class="form-title">提交信息，领取免费试播</div>
-    <p class="form-desc">填写以下信息，提交后添加微信获取专属试播方案</p>
+    <p class="form-desc">提交信息，商务经理 24 小时内联系您并安排专属试播</p>
     <form id="leadForm" novalidate>
       <div class="field">
         <label>品牌名 <span class="req">*</span></label>
         <input type="text" id="brand" placeholder="如：某品牌" autocomplete="organization">
       </div>
       <div class="field">
-        <label>公司主体 <span class="req">*</span></label>
+        <label>公司主体</label>
         <input type="text" id="company" placeholder="营业执照上的公司全称" autocomplete="organization">
       </div>
       <div class="field">
-        <label>平台 <span class="req">*</span></label>
+        <label>平台</label>
         <select id="platform">
           <option value="" disabled selected>请选择直播平台</option>
           <option>视频号</option>
@@ -209,7 +222,7 @@
         </select>
       </div>
       <div class="field">
-        <label>联系人 <span class="req">*</span></label>
+        <label>联系人</label>
         <input type="text" id="contact" placeholder="您的称呼" autocomplete="name">
       </div>
       <div class="field">
@@ -224,9 +237,13 @@
   <!-- 提交成功：展示微信二维码 -->
   <div class="wechat-result" id="wechatResult">
     <h2>已收到您的信息</h2>
-    <p class="tip">长按识别下方二维码，添加微信<br>获取您的专属免费试播方案</p>
+    <p class="tip">商务经理将在 <b style="color:var(--accent)">24 小时内</b>与您联系，安排专属免费试播。<br>长按识别下方二维码，抢先添加微信</p>
     <img class="qr" src="wechat_contact.png" alt="微信二维码">
     <span class="hold">长按识别二维码，添加我的微信</span>
+    <div class="copy-tel" id="copyTel" data-copyable data-tel="13157180578">
+      <span>商务经理电话：131 5718 0578</span>
+      <b id="copyHint">点击复制</b>
+    </div>
     <a class="again" href="javascript:void(0)" onclick="resetForm()">返回重新填写</a>
   </div>
 
@@ -253,15 +270,57 @@
       fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
     } catch (e) {}
   }
-  // 行业卡片点击 → 上报行为轨迹
+  // ===== O1 渠道来源参数 =====
+  function getSrc() {
+    try { return localStorage.getItem('hub_src') || ''; } catch (e) { return ''; }
+  }
+  function setSrc() {
+    try {
+      var q = new URLSearchParams(location.search);
+      var src = (q.get('src') || '').trim();
+      if (src) { localStorage.setItem('hub_src', src); return; }
+      var old = localStorage.getItem('hub_src');
+      if (!old) localStorage.setItem('hub_src', '');
+    } catch (e) {}
+  }
+  setSrc();
+  function srcLabel() { var s = getSrc(); return s ? s : '直接访问'; }
+
+  // 行业卡片点击 → 上报行为轨迹（带来源）
   document.querySelectorAll('.industry-card').forEach(function (card) {
     card.addEventListener('click', function () {
       var name = card.querySelector('.name').textContent.trim();
       reportToFeishu('【数字人案例页·行为轨迹】\n🕒 ' + _nowStr() +
         '\n📂 事件：打开行业 Demo' +
         '\n🏷 行业：' + name +
+        '\n📎 来源：' + srcLabel() +
         '\n🔗 ' + card.href);
     });
+  });
+
+  // ===== O7 页面停留 30 秒上报 =====
+  setTimeout(function () {
+    reportToFeishu('【数字人案例页·行为轨迹】\n🕒 ' + _nowStr() +
+      '\n📂 事件：聚合页停留 30 秒' +
+      '\n📎 来源：' + srcLabel());
+  }, 30000);
+
+  // ===== O9 一键复制电话 =====
+  var copyTel = document.getElementById('copyTel');
+  if (copyTel) copyTel.addEventListener('click', function () {
+    var tel = copyTel.getAttribute('data-tel') || '';
+    var hint = document.getElementById('copyHint');
+    function ok() { if (hint) hint.textContent = '已复制'; setTimeout(function(){ if (hint) hint.textContent = '点击复制'; }, 2000); }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = tel; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); ok(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(tel).then(ok, fallback);
+    } else { fallback(); }
   });
 
   var form = document.getElementById('leadForm');
@@ -275,9 +334,6 @@
     var phone = document.getElementById('phone').value.trim();
     var msg = '';
     if (!brand) msg = '请填写品牌名';
-    else if (!company) msg = '请填写公司主体';
-    else if (!platform) msg = '请选择直播平台';
-    else if (!contact) msg = '请填写联系人';
     else if (!/^1\d{10}$/.test(phone)) msg = '请填写正确的 11 位手机号';
     if (msg) {
       errMsg.textContent = msg;
@@ -285,13 +341,14 @@
       return;
     }
     errMsg.style.display = 'none';
-    // 上报线索到飞书
+    // 上报线索到飞书（结构化 + 来源）
     reportToFeishu('【数字人案例页·新线索】\n🕒 ' + _nowStr() +
       '\n🏢 品牌名：' + brand +
-      '\n🏭 公司主体：' + company +
-      '\n📱 平台：' + platform +
-      '\n👤 联系人：' + contact +
-      '\n📞 联系电话：' + phone);
+      '\n🏭 公司主体：' + (company || '未填写') +
+      '\n📱 平台：' + (platform || '未选择') +
+      '\n👤 联系人：' + (contact || '未填写') +
+      '\n📞 联系电话：' + phone +
+      '\n📎 来源：' + srcLabel());
     // 本地留存一份线索（浏览器存储），便于追溯
     try {
       var leads = JSON.parse(localStorage.getItem('demo_leads') || '[]');
@@ -327,13 +384,13 @@
   // 2) 行为拦截
   document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   document.addEventListener('selectstart', function (e) {
-    if (!e.target.closest('input,textarea,select,.field,form')) e.preventDefault();
+    if (!e.target.closest('input,textarea,select,.field,form,[data-copyable]')) e.preventDefault();
   });
   document.addEventListener('dragstart', function (e) {
     if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault();
   });
   document.addEventListener('copy', function (e) {
-    if (!e.target.closest('input,textarea,select')) e.preventDefault();
+    if (!e.target.closest('input,textarea,select,[data-copyable]')) e.preventDefault();
   });
   document.addEventListener('keydown', function (e) {
     var k = (e.key || '').toUpperCase();
