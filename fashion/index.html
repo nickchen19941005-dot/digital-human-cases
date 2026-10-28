@@ -57,6 +57,7 @@
   video.is-second { aspect-ratio: 0.462; }
   video.is-third { aspect-ratio: 0.46; }
   video.is-fourth { aspect-ratio: 0.460; }
+  video.is-fifth { aspect-ratio: 0.453; }
   .play {
     position: absolute; inset: 0; margin: auto;
     width: 72px; height: 72px; border-radius: 50%;
@@ -73,6 +74,7 @@
   .case.is-second .play { background: var(--accent2); }
   .case.is-third .play { background: var(--accent2); }
   .case.is-fourth .play { background: var(--accent); }
+  .case.is-fifth .play { background: var(--accent); }
 
   .info { padding: 16px 18px 18px; }
   .info-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -82,6 +84,7 @@
   .case.is-second .dot { background: var(--accent2); }
   .case.is-third .dot { background: var(--accent2); }
   .case.is-fourth .dot { background: var(--accent); }
+  .case.is-fifth .dot { background: var(--accent); }
   h2 { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; font-weight: 600; font-size: 20px; }
   .duration {
     font-size: 12px; font-variant-numeric: tabular-nums;
@@ -253,6 +256,23 @@
     </div>
   </section>
 
+
+  <section class="case is-fifth">
+    <div class="stage">
+      <video class="is-fifth" controls playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture draggable="false" data-vb="dl96eDg0Yndyai5tcDQ=" data-pb="dl96eDg0Yndyai5qcGc="></video>
+      <button class="play" type="button" aria-label="播放案例视频">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72c0 .81.88 1.31 1.57.89l10.8-6.86a1.05 1.05 0 0 0 0-1.78L9.57 4.25A1.04 1.04 0 0 0 8 5.14Z"/></svg>
+      </button>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="brand"><span class="dot"></span><h2>KENT & CURWEN 肯迪文</h2></div>
+        <span class="duration">00:33</span>
+      </div>
+      <p class="desc">英伦男装直播实录 · 经典穿搭讲解与商品推荐。</p>
+      <div class="tags"><span class="tag">男装直播</span><span class="tag">穿搭讲解</span></div>
+    </div>
+  </section>
 
   <footer>AI 鞋服直播案例展示 · 建议使用手机全屏观看</footer>
 
